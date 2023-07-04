@@ -22,7 +22,7 @@ public class ApplicationWebLoader extends AbstractAnnotationConfigDispatcherServ
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
 		return new Class<?>[] {
-			WebMvcConfiguration.class, WebSecurityConfiguration.class
+			WebMvcConfiguration.class, DatabaseConfiguration.class ,WebSecurityConfiguration.class
 		};
 	}
 
