@@ -10,8 +10,10 @@ public class PasswordEncoderTest {
 		System.out.println(encoder.encode("Admin"));
 		System.out.println(encoder.encode("Admin"));
 		System.out.println(encoder.encode("Admin"));
+		System.out.println("Member Password : " + encoder.encode("Member"));
 		
 		System.out.println(encoder.matches("Admin", "$2a$10$qI/gxK7WIFhmmTADAIHPIeXetk6vKUAGVAX83IXnbRFK/RZ5xDhru"));
+		System.out.println(encoder.matches("Member", "$2a$10$4ZgBg/3np1Ff.YpDHNClMeGmYe4XEuqczC5MEgr3Mj1sPkt7bp/ly"));
 	}
 
 }
