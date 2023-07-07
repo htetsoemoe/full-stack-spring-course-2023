@@ -21,6 +21,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.jdc.spring.javaconfig.service.security.CustomerUserDetailsService;
+
 
 @Configuration
 @EnableWebSecurity
@@ -28,6 +30,9 @@ public class WebSecurityConfiguration {
 
 	@Autowired
 	private DataSource dataSource;
+	
+	@Autowired
+	private CustomerUserDetailsService customerUserDetailsService;
 
 	@Bean
 	SecurityFilterChain homeFilter(HttpSecurity http) throws Exception {
@@ -51,7 +56,8 @@ public class WebSecurityConfiguration {
 	SecurityFilterChain httpFilter(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(request -> {
 			request.requestMatchers("/admin/**").hasAuthority("Admin");
-			request.requestMatchers("/member/**").hasAnyAuthority("Admin", "Member");
+			request.requestMatchers("/member/**").hasAuthority("Member");
+			request.requestMatchers("/customer/**").hasAuthority("Customer");
 			request.anyRequest().denyAll();
 		});
 
@@ -74,8 +80,11 @@ public class WebSecurityConfiguration {
 		// set InMemoryUserDetailsManager with AuthenticationProvider to AuthenticationManagerBuilder
 		builder.authenticationProvider(getAdminProvider(passwordEncoder));
 		
-		// set InMemoryUserDetailsManager with AuthenticationProvider to AuthenticationManagerBuilder
+		// set JdbcUserDetailsManager with AuthenticationProvider to AuthenticationManagerBuilder
 		builder.authenticationProvider(getMemberProvider(passwordEncoder));
+		
+		// set JpaUserDetailsManager with AuthenticationProvider to AuthenticationManagerBuilder
+		builder.authenticationProvider(getCustomerProvider(passwordEncoder));
 
 		return builder.build();
 	}
@@ -103,6 +112,14 @@ public class WebSecurityConfiguration {
 		// set UserDetailsService and PasswordEncoder to AuthenticationProvider
 		var provider = new DaoAuthenticationProvider(passwordEncoder);
 		provider.setUserDetailsService(userDetailsService);
+		
+		return provider;
+	}
+	
+	private AuthenticationProvider getCustomerProvider(PasswordEncoder passwordEncoder) {
+		var provider = new DaoAuthenticationProvider();
+		provider.setPasswordEncoder(passwordEncoder);
+		provider.setUserDetailsService(customerUserDetailsService);
 		
 		return provider;
 	}
