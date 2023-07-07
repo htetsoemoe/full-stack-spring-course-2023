@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+		th:replace="~{fragments/layout :: common(main = ~{::main})}"> 
+<!-- Caused by: java.io.FileNotFoundException: Could not open ServletContext resource [/views//fragments/layout.html] -->
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+</head>
+<body>
+	<main>
+		<p>This is Public Home.</p>
+		
+		<div>
+			<a th:href="@{/admin}" class="btn btn-primary">Admin</a>
+			<a th:href="@{/member}" class="btn btn-primary">Member</a>
+		</div>
+	</main>
+</body>
+</html>
