@@ -21,19 +21,13 @@
 			access="hasAuthority('Admin')" />
 		<security:intercept-url pattern="/member/**"
 			access="hasAnyAuthority('Admin', 'Member')" />
+		<security:intercept-url pattern="/customer/**"
+			access="hasAuthority('Customer')"/>
 
 		<security:form-login />
 		<security:logout />
 
 	</security:http>
-	
-	<!-- Data-Source -->
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
-		<property name="url" value="jdbc:mysql://localhost:3306/security_db"></property>
-		<property name="username" value="securityusr"></property>
-		<property name="password" value="securitypwd"></property>
-	</bean>
 
 	<!-- Password Encoder -->
 	<bean id="passwordEncoder"
@@ -55,6 +49,10 @@
 				data-source-ref="dataSource"
 				users-by-username-query="select email username, password, true from MEMBER where email = ?"
 				authorities-by-username-query="select email username, role from MEMBER where email = ?"/>		
+		</security:authentication-provider>
+		
+		<security:authentication-provider user-service-ref="customerUserDetailsService">
+			<security:password-encoder ref="passwordEncoder"/>
 		</security:authentication-provider>
 		
 	</security:authentication-manager>

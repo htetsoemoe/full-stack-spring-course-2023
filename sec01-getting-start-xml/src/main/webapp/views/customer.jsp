@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,12 +13,14 @@
 <body>
 
 	<div class="container mt-4">
-		<h1>Hello Spring Security 6.0</h1>
+		<h1>Customer Page</h1>
 
 		<div>
-			<a href="/admin" class="btn btn-primary">Admin Home</a>
-			<a href="/member" class="btn btn-secondary">Member Home</a>
-			<a href="/customer" class="btn btn-secondary">Customer Home</a>
+			<a href="/" class="btn btn-primary">Home</a>
+
+			<sf:form class="d-inline-block" action="/logout" method="post">
+				<button type="submit" class="btn btn-danger">Logout</button>
+			</sf:form>
 		</div>
 	</div>
 
