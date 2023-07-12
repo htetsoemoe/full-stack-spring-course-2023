@@ -29,13 +29,17 @@
 		<div>
 			<a href="/" class="btn btn-primary">Home</a>
 
+			<c:url value="/customer/address/edit" var="addressEditLink"></c:url>
+			<a href="${ addressEditLink }" class="btn btn-primary">Create
+				Address</a>
+
 			<sf:form class="d-inline-block" action="/logout" method="post">
 				<button type="submit" class="btn btn-danger">Logout</button>
 			</sf:form>
 		</div>
 
 		<div class="mt-4">
-			<h3>My Address</h3>
+			<h3>Shipping Address</h3>
 
 			<c:choose>
 				<c:when test="${not empty addresses}">
@@ -48,21 +52,30 @@
 								<th>Street</th>
 								<th>Township</th>
 								<th>Division</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
+							<c:forEach items="${ addresses }" var="dto">
+								<tr>
+									<td>${ dto.id }</td>
+									<td>${ dto.name }</td>
+									<td>${ dto.building }</td>
+									<td>${ dto.street }</td>
+									<td>${ dto.township }</td>
+									<td>${ dto.division }</td>
+									<td>
+										<c:url value="/customer/address/edit" var="editLink">
+											<c:param name="id" value="${ dto.id }"></c:param>
+										</c:url>
+										<a href="${ editLink }">Edit</a>
+									</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</c:when>
-				
+
 				<c:otherwise>
 					<div class="alert alert-info">There is no data.</div>
 				</c:otherwise>
