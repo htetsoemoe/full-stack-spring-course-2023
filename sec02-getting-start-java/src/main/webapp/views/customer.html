@@ -9,7 +9,57 @@
 	<main>
 		<p>This is a Customer Home.</p>
 		
+		<div class="card mb-4">		
+			<div class="card-body">		
+				<h4 class="card-title">Login Information</h4>	
+				<div class="row">
+					<div class="col-2">Login ID :</div>
+					<div class="col-2">[[${loginId}]]</div>
+					<div class="col-1">Roles :</div>
+					<div class="col d-flex">
+						<div th:each="auth : ${authorities}" th:text="${auth}"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<h4>Shipping Addresses</h4>
+		
+		<div th:if="${#lists.size(addresses) == 0}" class="alert alert-info">
+			There is no data.
+		</div>
+		
+		<table th:unless="${#lists.size(addresses) == 0}" class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Building</th>
+					<th>Street</th>
+					<th>Township</th>
+					<th>Division</th>
+					<th></th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="dto : ${addresses}">
+					<td th:text="${dto.id}"></td>
+					<td th:text="${dto.name}"></td>
+					<td th:text="${dto.building}"></td>
+					<td th:text="${dto.street}"></td>
+					<td th:text="${dto.township}"></td>
+					<td th:text="${dto.division}"></td>
+					<td>
+						<a th:href="@{/customer/address/edit(id=${dto.id})}">Edit</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
 		<div>
+			<a th:href="@{customer/address/edit}" class="btn btn-primary">New Address</a>
+		
 			<a th:href="@{/}" class="btn btn-primary">Public Home</a>
 			<div th:replace="~{fragments/security :: signout}">
 			<!-- Caused by: java.io.FileNotFoundException: Could not open ServletContext resource [/views//fragments/security.html] -->
