@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -51,6 +52,26 @@ public class WebSecurityConfiguration {
 
 		return http.build();
 	}
+	
+	/**
+	 * HTTP Basic for Admin
+	 * @throws Exception 
+	 */
+	@Bean
+	SecurityFilterChain adminResource(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
+		http.securityMatcher("/admin/**")
+			.authorizeHttpRequests(request -> {
+				request.anyRequest().hasAuthority("Admin");
+			});
+		
+		http.httpBasic(Customizer.withDefaults());
+		http.logout(Customizer.withDefaults());
+		
+		var authenticationManager = new ProviderManager(getAdminProvider(passwordEncoder));
+		http.authenticationManager(authenticationManager);
+		
+		return http.build();
+	}
 
 	@Bean
 	SecurityFilterChain httpFilter(HttpSecurity http) throws Exception {
@@ -78,7 +99,7 @@ public class WebSecurityConfiguration {
 		var builder = http.getSharedObject(AuthenticationManagerBuilder.class);
 
 		// set InMemoryUserDetailsManager with AuthenticationProvider to AuthenticationManagerBuilder
-		builder.authenticationProvider(getAdminProvider(passwordEncoder));
+//		builder.authenticationProvider(getAdminProvider(passwordEncoder));
 		
 		// set JdbcUserDetailsManager with AuthenticationProvider to AuthenticationManagerBuilder
 		builder.authenticationProvider(getMemberProvider(passwordEncoder));

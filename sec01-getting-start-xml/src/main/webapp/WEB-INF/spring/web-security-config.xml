@@ -14,11 +14,28 @@
 	<security:http pattern="/" security="none" />
 	<security:http pattern="/resources/**" security="none" />
 	<security:http pattern="/favicon.ico" security="none"></security:http>
+	
+	<!-- HTTP Basic -->
+	
+	<security:http pattern="/admin/**" authentication-manager-ref="adminAuthenticationManager">
+		<security:intercept-url pattern="/admin/**" access="hasAuthority('Admin')" />
+		<security:http-basic/>
+		<security:logout/>
+	</security:http>
+	
+	<security:authentication-manager id="adminAuthenticationManager">
+			<security:authentication-provider>
+			<security:password-encoder ref="passwordEncoder" />
+			<security:user-service>
+				<security:user name="admin@gmail.com" authorities="Admin" password="$2a$10$ricn4HuEM.hQoTASy7/fU.PWLqbV4dzmo3X2Orw0raO1.OcGoQbTe" />
+			</security:user-service>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	<!-- HTTP Basic -->
 
 	<security:http>
 
-		<security:intercept-url pattern="/admin/**"
-			access="hasAuthority('Admin')" />
 		<security:intercept-url pattern="/member/**"
 			access="hasAnyAuthority('Admin', 'Member')" />
 		<security:intercept-url pattern="/customer/**"
@@ -35,13 +52,6 @@
 
 	<!-- Authentication Manager -->
 	<security:authentication-manager>
-	
-		<security:authentication-provider>
-			<security:password-encoder ref="passwordEncoder" />
-			<security:user-service>
-				<security:user name="admin@gmail.com" authorities="Admin" password="$2a$10$ricn4HuEM.hQoTASy7/fU.PWLqbV4dzmo3X2Orw0raO1.OcGoQbTe" />
-			</security:user-service>
-		</security:authentication-provider>
 		
 		<security:authentication-provider>
 			<security:password-encoder ref="passwordEncoder"/>
