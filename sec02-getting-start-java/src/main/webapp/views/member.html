@@ -11,10 +11,17 @@
 		
 		<div>
 			<a th:href="@{/}" class="btn btn-primary">Public Home</a>
-			<div th:replace="~{fragments/security :: signout}">
+			
+			<!-- 
+			<div th:replace="~{fragments/security :: signout}">			
+			 -->
 			<!-- Caused by: java.io.FileNotFoundException: Could not open ServletContext resource [/views//fragments/security.html] -->
 			</div>
+			
+			<a href="#" class="btn btn-danger" id="logoutBtn">Logout</a>
+			
 		</div>
+		<script th:src="@{/resources/js/client-logout.js}"></script>
 	</main>
 </body>
 </html>

@@ -33,11 +33,37 @@
 	</security:authentication-manager>
 	
 	<!-- HTTP Basic -->
+	
+	
+	<!-- Digest Login -->
+	
+	<security:http pattern="/member/**" entry-point-ref="digestAuthenticationEntryPoint">
+		<security:intercept-url pattern="/member/**" access="hasAuthority('Member')"/>
+		<security:custom-filter ref="digestAuthenticationFilter" position="DIGEST_AUTH_FILTER"/>
+	</security:http>
+	
+	<!-- Authentication Entry Point -->
+	<bean id="digestAuthenticationEntryPoint" class="org.springframework.security.web.authentication.www.DigestAuthenticationEntryPoint">
+		<property name="key" value="MY-SECRET-KEY"></property>
+		<property name="realmName" value="DIGEST-REALM"></property>
+	</bean>
+	
+	<!-- Authentication Filter -->
+	<bean id="digestAuthenticationFilter" class="org.springframework.security.web.authentication.www.DigestAuthenticationFilter">
+		<property name="authenticationEntryPoint" ref="digestAuthenticationEntryPoint"></property>
+		<property name="userDetailsService" ref="memberUserDetailsService"></property>
+    	<property name="createAuthenticatedToken" value="true"></property>
+	</bean>
+	
+	
+	<security:jdbc-user-service id="memberUserDetailsService"
+				data-source-ref="dataSource"
+				users-by-username-query="select email username, password, true from MEMBER where email = ?"
+				authorities-by-username-query="select email username, role from MEMBER where email = ?"/>
+	<!-- Digest Login -->
 
 	<security:http>
 
-		<security:intercept-url pattern="/member/**"
-			access="hasAnyAuthority('Admin', 'Member')" />
 		<security:intercept-url pattern="/customer/**"
 			access="hasAuthority('Customer')"/>
 
@@ -52,14 +78,6 @@
 
 	<!-- Authentication Manager -->
 	<security:authentication-manager>
-		
-		<security:authentication-provider>
-			<security:password-encoder ref="passwordEncoder"/>
-			<security:jdbc-user-service 
-				data-source-ref="dataSource"
-				users-by-username-query="select email username, password, true from MEMBER where email = ?"
-				authorities-by-username-query="select email username, role from MEMBER where email = ?"/>		
-		</security:authentication-provider>
 		
 		<security:authentication-provider user-service-ref="customerUserDetailsService">
 			<security:password-encoder ref="passwordEncoder"/>
