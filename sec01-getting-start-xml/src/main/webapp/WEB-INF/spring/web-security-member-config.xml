@@ -10,33 +10,8 @@
         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<!-- bean definitions here -->
-
-	<security:http pattern="/" security="none" />
-	<security:http pattern="/resources/**" security="none" />
-	<security:http pattern="/favicon.ico" security="none"></security:http>
-	
-	<!-- HTTP Basic -->
-	
-	<security:http pattern="/admin/**" authentication-manager-ref="adminAuthenticationManager">
-		<security:intercept-url pattern="/admin/**" access="hasAuthority('Admin')" />
-		<security:http-basic/>
-		<security:logout/>
-	</security:http>
-	
-	<security:authentication-manager id="adminAuthenticationManager">
-			<security:authentication-provider>
-			<security:password-encoder ref="passwordEncoder" />
-			<security:user-service>
-				<security:user name="admin@gmail.com" authorities="Admin" password="$2a$10$ricn4HuEM.hQoTASy7/fU.PWLqbV4dzmo3X2Orw0raO1.OcGoQbTe" />
-			</security:user-service>
-		</security:authentication-provider>
-	</security:authentication-manager>
-	
-	<!-- HTTP Basic -->
-	
 	
 	<!-- Digest Login -->
-	
 	<security:http pattern="/member/**" entry-point-ref="digestAuthenticationEntryPoint">
 		<security:intercept-url pattern="/member/**" access="hasAuthority('Member')"/>
 		<security:custom-filter ref="digestAuthenticationFilter" position="DIGEST_AUTH_FILTER"/>
@@ -61,28 +36,5 @@
 				users-by-username-query="select email username, password, true from MEMBER where email = ?"
 				authorities-by-username-query="select email username, role from MEMBER where email = ?"/>
 	<!-- Digest Login -->
-
-	<security:http>
-
-		<security:intercept-url pattern="/customer/**"
-			access="hasAuthority('Customer')"/>
-
-		<security:form-login />
-		<security:logout />
-
-	</security:http>
-
-	<!-- Password Encoder -->
-	<bean id="passwordEncoder"
-		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
-
-	<!-- Authentication Manager -->
-	<security:authentication-manager>
-		
-		<security:authentication-provider user-service-ref="customerUserDetailsService">
-			<security:password-encoder ref="passwordEncoder"/>
-		</security:authentication-provider>
-		
-	</security:authentication-manager>
 
 </beans>
