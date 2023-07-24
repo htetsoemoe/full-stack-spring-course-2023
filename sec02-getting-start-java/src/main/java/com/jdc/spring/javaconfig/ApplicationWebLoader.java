@@ -25,8 +25,8 @@ public class ApplicationWebLoader extends AbstractAnnotationConfigDispatcherServ
 			WebMvcConfiguration.class, 
 			DatabaseConfiguration.class,
 			WebSecurityAdminConfiguration.class,
-			WebSecurityCustomerConfig.class,
-			WebSecurityMemberConfig.class
+			WebSecurityMemberConfig.class,
+			WebSecurityCustomerConfig.class
 		};
 	}
 
