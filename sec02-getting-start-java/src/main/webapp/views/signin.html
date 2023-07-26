@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{fragments/layout :: common(main = ~{::main})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<main>
+		<p>Customer Login</p>
+		
+		<form th:action="@{/authentication}" method="post" class="w-50">
+		
+			<div class="mb-3">
+				<label for="" class="form-label">Email</label>
+				<input type="text" name="username" class="form-control" placeholder="Enter Email"/>
+			</div>
+			
+			<div class="mb-3">
+				<label for="" class="form-label">Password</label>
+				<input type="password" name="password" class="form-control" placeholder="Enter Password"/>
+			</div>
+			
+			<div>
+				<button type="submit" class="btn btn-primary">Login</button>
+				<a th:href="@{/}" class="btn btn-primary">Home</a>
+			</div>
+		
+		</form>
+	</main>
+
+</body>
+</html>
