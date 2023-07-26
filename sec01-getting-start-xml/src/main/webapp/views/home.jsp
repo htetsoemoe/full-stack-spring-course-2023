@@ -18,6 +18,8 @@
 			<a href="/admin" class="btn btn-primary">Admin Home</a>
 			<a href="/member" class="btn btn-secondary">Member Home</a>
 			<a href="/customer" class="btn btn-secondary">Customer Home</a>
+			<a href="/customer/address/edit" class="btn btn-info">Customer Address Edit</a>
+			<a href="/authentication" class="btn btn-info">Customer Login</a>
 		</div>
 	</div>
 
