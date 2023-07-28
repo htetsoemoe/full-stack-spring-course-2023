@@ -26,7 +26,7 @@ public class WebSecurityCustomerConfig {
 			});
 
 		http.formLogin(form -> {
-			form.loginPage("/authentication");
+			form.loginPage("/authentication"); // loginPage => the login page to redirect to if authentication is required (i.e."/login")
 			form.defaultSuccessUrl("/customer", true);
 		});
 

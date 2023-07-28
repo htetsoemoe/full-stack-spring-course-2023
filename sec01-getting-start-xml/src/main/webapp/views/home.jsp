@@ -19,7 +19,8 @@
 			<a href="/member" class="btn btn-secondary">Member Home</a>
 			<a href="/customer" class="btn btn-secondary">Customer Home</a>
 			<a href="/customer/address/edit" class="btn btn-info">Customer Address Edit</a>
-			<a href="/authentication" class="btn btn-info">Customer Login</a>
+			<a href="/authentication" class="btn btn-warning">Customer Login</a>
+			<a href="/signup" class="btn btn-warning">Customer Sign Up</a>
 		</div>
 	</div>
 

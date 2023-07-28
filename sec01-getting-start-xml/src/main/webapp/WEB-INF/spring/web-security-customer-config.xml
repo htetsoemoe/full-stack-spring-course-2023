@@ -12,6 +12,7 @@
 	<!-- bean definitions here -->
 
 	<security:http authentication-manager-ref="authenticationManager">
+		<security:intercept-url pattern="/signup" access="permitAll"/>
 		<security:intercept-url pattern="/authentication" method="GET" access="permitAll"/>
 		<security:intercept-url pattern="/login" method="POST" access="permitAll"/> <!-- The request URL pattern which will be mapped to the FilterChain -->
 		<security:intercept-url pattern="/customer/**" access="hasAuthority('Customer')"/> 
