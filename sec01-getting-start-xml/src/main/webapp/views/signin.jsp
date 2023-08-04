@@ -31,6 +31,7 @@
 			
 			<div>
 				<button type="submit" class="btn btn-primary">Login</button>
+				<a href="/signup" class="btn btn-primary">Sign Up</a>
 				<a href="/" class="btn btn-primary">Home</a>
 			</div>
 		</sf:form>
