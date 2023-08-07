@@ -17,6 +17,7 @@
 		<security:intercept-url pattern="/login" method="POST" access="permitAll"/> <!-- The request URL pattern which will be mapped to the FilterChain -->
 		<security:intercept-url pattern="/customer/**" access="hasAuthority('Customer')"/> 
 
+		<!-- Custom Login Page for Authentication -->
 		<security:form-login login-page="/authentication" default-target-url="/customer"/>
 		<security:logout />
 	</security:http>

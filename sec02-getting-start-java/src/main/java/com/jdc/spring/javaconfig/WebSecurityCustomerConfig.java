@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 
 import com.jdc.spring.javaconfig.service.security.CustomerUserDetailsService;
 
@@ -20,7 +22,7 @@ public class WebSecurityCustomerConfig {
 	SecurityFilterChain httpFilter(HttpSecurity http) throws Exception {
 
 		http.authorizeHttpRequests(request -> {
-				request.requestMatchers("/authentication").permitAll();
+				request.requestMatchers("/authentication", "/signup").permitAll();
 				request.requestMatchers("/customer/**").hasAuthority("Customer");
 				request.anyRequest().denyAll();
 			});
@@ -33,6 +35,11 @@ public class WebSecurityCustomerConfig {
 		http.logout(Customizer.withDefaults());
 
 		return http.build();
+	}
+	
+	@Bean
+	SecurityContextRepository securityContextRepository() {
+		return new HttpSessionSecurityContextRepository();
 	}
 
 	@Bean
