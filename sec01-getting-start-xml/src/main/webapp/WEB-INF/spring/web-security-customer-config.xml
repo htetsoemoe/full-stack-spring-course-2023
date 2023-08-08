@@ -19,6 +19,11 @@
 
 		<!-- Custom Login Page for Authentication -->
 		<security:form-login login-page="/authentication" default-target-url="/customer"/>
+		
+		<!-- Remember Me -->
+		<security:remember-me user-service-ref="customerUserDetailsService"/>
+		
+		<!-- Logout -->
 		<security:logout />
 	</security:http>
 
