@@ -19,7 +19,7 @@ import com.jdc.spring.javaconfig.service.security.CustomerUserDetailsService;
 public class WebSecurityCustomerConfig {
 
 	@Bean
-	SecurityFilterChain httpFilter(HttpSecurity http) throws Exception {
+	SecurityFilterChain httpFilter(HttpSecurity http, CustomerUserDetailsService customerUserDetailsService) throws Exception {
 
 		http.authorizeHttpRequests(request -> {
 				request.requestMatchers("/authentication", "/signup").permitAll();
@@ -27,11 +27,18 @@ public class WebSecurityCustomerConfig {
 				request.anyRequest().denyAll();
 			});
 
+		// Form Login with Authentication
 		http.formLogin(form -> {
 			form.loginPage("/authentication"); // loginPage => the login page to redirect to if authentication is required (i.e."/login")
 			form.defaultSuccessUrl("/customer", true);
 		});
+		
+		// Remember Me with specific UserDetailsService
+		http.rememberMe(rememberMe -> {
+			rememberMe.userDetailsService(customerUserDetailsService);
+		});
 
+		// Logout
 		http.logout(Customizer.withDefaults());
 
 		return http.build();
