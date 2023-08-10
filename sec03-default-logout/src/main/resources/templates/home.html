@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout :: common(title = 'Home', content = ~{::main})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<main>
+		<p>This is a Public Home.</p>
+		
+		<div class="mt-4">
+			<a th:href="@{/member}" class="btn btn-primary">Member Home</a>
+		</div>
+	</main>
+</body>
+</html>
