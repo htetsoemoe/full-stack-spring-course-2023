@@ -48,8 +48,11 @@ public class WebSecurityCustomerConfig {
 		});
 		
 
-		// Logout
-		http.logout(Customizer.withDefaults());
+		// Logout with Default
+		//http.logout(Customizer.withDefaults());
+		
+		// logout with logout success-url
+		http.logout(logout -> logout.logoutSuccessUrl("/"));
 
 		return http.build();
 	}
