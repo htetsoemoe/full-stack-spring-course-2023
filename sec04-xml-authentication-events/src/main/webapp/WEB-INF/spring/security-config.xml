@@ -11,6 +11,22 @@
         http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 	
+	<context:component-scan base-package="com.jdc.demo"></context:component-scan>
 	
+	<security:user-service>
+		<security:user name="kodemo" authorities="Member" password="{noop}kodemo"/>
+	</security:user-service>
+	
+	<security:http>
+		<security:intercept-url pattern="/" access="permitAll"/>
+		<security:intercept-url pattern="/home" access="permitAll"/>
+		<security:intercept-url pattern="/login" access="permitAll"/>
+		
+		<security:intercept-url pattern="/member" access="hasAuthority('Member')"/>
+		
+		<security:form-login/>
+		
+		<security:logout logout-success-url="/"/>
+	</security:http>
     
 </beans>
