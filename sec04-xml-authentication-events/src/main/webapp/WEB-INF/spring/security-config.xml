@@ -17,7 +17,7 @@
 		<security:user name="kodemo" authorities="Member" password="{noop}kodemo"/>
 	</security:user-service>
 	
-	<security:http>
+	<security:http auto-config="true">
 		<security:intercept-url pattern="/" access="permitAll"/>
 		<security:intercept-url pattern="/home" access="permitAll"/>
 		<security:intercept-url pattern="/login" access="permitAll"/>
@@ -26,7 +26,7 @@
 		
 		<security:form-login/>
 		
-		<security:logout logout-success-url="/"/>
+		<!-- <security:logout logout-success-url="/"/> -->
 	</security:http>
     
 </beans>
