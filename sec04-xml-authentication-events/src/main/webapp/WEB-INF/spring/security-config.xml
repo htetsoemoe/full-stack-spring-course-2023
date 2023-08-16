@@ -17,7 +17,7 @@
 		<security:user name="kodemo" authorities="Member" password="{noop}kodemo"/>
 	</security:user-service>
 	
-	<security:http auto-config="true">
+	<security:http auto-config="true" authentication-manager-ref="customProviderManager">
 		<security:intercept-url pattern="/" access="permitAll"/>
 		<security:intercept-url pattern="/home" access="permitAll"/>
 		<security:intercept-url pattern="/login" access="permitAll"/>
