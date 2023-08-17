@@ -13,6 +13,11 @@
 	
 	<context:component-scan base-package="com.jdc.demo"></context:component-scan>
 	
+	<bean id="customAuthenticationFailureHandler" class="com.jdc.demo.security.CustomAuthenticationFailureHandler">
+		<property name="failureUrl" value="/login"></property>
+		<property name="defaultErrorMessage" value="Login Fails."></property>
+	</bean>
+	
 	<security:user-service>
 		<security:user name="kodemo" authorities="Member" password="{noop}kodemo"/>
 	</security:user-service>
@@ -21,12 +26,13 @@
 		<security:intercept-url pattern="/" access="permitAll"/>
 		<security:intercept-url pattern="/home" access="permitAll"/>
 		<security:intercept-url pattern="/login" access="permitAll"/>
+		<security:intercept-url pattern="/favicon.ico" access="permitAll"/>
 		
 		<security:intercept-url pattern="/member" access="hasAuthority('Member')"/>
 		
-		<security:form-login/>
+		<security:form-login login-page="/login" authentication-failure-handler-ref="customAuthenticationFailureHandler"/>
 		
-		<!-- <security:logout logout-success-url="/"/> -->
+		<security:logout logout-success-url="/home"/>
 	</security:http>
     
 </beans>

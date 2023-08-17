@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +16,9 @@
 		<h1>Member Home</h1>
 		
 		<div class="mt-4">
-			<a href="/logout" class="btn btn-outline-danger">Logout</a>
+			<form:form method="post" action="/logout">
+				<button class="btn btn-danger">Logout</button>
+			</form:form>
 		</div>
 	</div>
 
